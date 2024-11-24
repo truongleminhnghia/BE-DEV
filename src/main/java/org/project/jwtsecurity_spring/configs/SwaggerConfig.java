@@ -24,12 +24,16 @@ public class SwaggerConfig {
     private String swaggerScheme;
     @Value("${swagger.format}")
     private String swaggerFormat;
+    @Value("${swagger.dev.url}") private String swaggerDevUrl;
+    @Value("${swagger.pro.url}") private String swaggerProUrl;
 
     @Bean
     public OpenAPI customOpenAPI() {
         Server devServer = new Server();
-        devServer.setUrl("http://localhost:8080/");
+        devServer.setUrl(swaggerDevUrl);
         devServer.description("Server URL in Development Environment");
+        devServer.setUrl(swaggerProUrl);
+        devServer.description("Server URL in Production Environment");
 
         Contact contact = new Contact();
         contact.setEmail("adronghia@gmail.com");
