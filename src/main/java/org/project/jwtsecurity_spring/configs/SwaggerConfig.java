@@ -32,8 +32,10 @@ public class SwaggerConfig {
         Server devServer = new Server();
         devServer.setUrl(swaggerDevUrl);
         devServer.description("Server URL in Development Environment");
-        devServer.setUrl(swaggerProUrl);
-        devServer.description("Server URL in Production Environment");
+
+        Server proServer = new Server();
+        proServer.setUrl(swaggerProUrl);
+        proServer.description("Server URL in Production Environment");
 
         Contact contact = new Contact();
         contact.setEmail("adronghia@gmail.com");
@@ -53,7 +55,7 @@ public class SwaggerConfig {
 
         return new OpenAPI()
                 .info(info)
-                .servers(List.of(devServer))
+                .servers(List.of(devServer, proServer))
                 .addSecurityItem(securityRequirement)
                 .components(components);
     }
