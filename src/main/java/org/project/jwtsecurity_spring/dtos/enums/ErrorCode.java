@@ -36,6 +36,9 @@ public enum ErrorCode {
     FORBIDDEN(HttpStatus.FORBIDDEN, "Forbidden"),
     LIST_EMPTY(HttpStatus.BAD_REQUEST, "List is empty"),
     TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "Token invalid"),
+    TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "Token do not found"),
+    TOKEN_DO_NOT_REFRESH(HttpStatus.OK, "Token do not refresh"),
+    REFRESH_TOKEN_FAILED(HttpStatus.BAD_REQUEST, "Refresh token failed"),
     INVALID_PRINCIPAL(HttpStatus.BAD_REQUEST, "INVALID_PRINCIPAL");
 
     private HttpStatus code;

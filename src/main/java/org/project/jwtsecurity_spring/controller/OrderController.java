@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @Autowired private IOrderService orderService;
 
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> create(@RequestBody OrderRequest request) {
         Order order = orderService.save(request);
