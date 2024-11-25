@@ -28,6 +28,12 @@ public class GlobalExceptionHandler {
                 .body(new ApiResponse(ErrorCode.INTERNAL_SERVER_ERROR.getCode().value(), exception.getMessage(), null));
     }
 
+//    @ExceptionHandler(value = UsernameNotFoundException.class)
+//    public ResponseEntity<ApiResponse> handlingUsernameNotFoundException(UsernameNotFoundException exception) {
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                .body(new ApiResponse(exception.hashCode(), exception.getMessage(), null));
+//    }
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         String enumKey = exception.getFieldError().getDefaultMessage();

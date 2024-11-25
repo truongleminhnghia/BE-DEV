@@ -18,7 +18,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createProduct(@Valid @RequestBody CreateProductRequest request) {
         ProductResponse productResponse = productService.saveProduct(request);

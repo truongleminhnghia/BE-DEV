@@ -3,10 +3,13 @@ package org.project.jwtsecurity_spring.controller;
 import jakarta.validation.Valid;
 import org.project.jwtsecurity_spring.configs.CustomerUserDetail;
 import org.project.jwtsecurity_spring.dtos.requests.AuthenticateRequest;
+import org.project.jwtsecurity_spring.dtos.requests.TokenRequest;
 import org.project.jwtsecurity_spring.dtos.requests.UserRegisterRequest;
 import org.project.jwtsecurity_spring.dtos.responses.ApiResponse;
 import org.project.jwtsecurity_spring.dtos.responses.UserResponse;
+import org.project.jwtsecurity_spring.entities.Token;
 import org.project.jwtsecurity_spring.jwt.JwtService;
+import org.project.jwtsecurity_spring.services.ITokenService;
 import org.project.jwtsecurity_spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import javax.swing.*;
 
 @RestController
 @RequestMapping("/auths")
@@ -30,6 +35,7 @@ public class AuthenticateController {
     private UserDetailsService userDetailsService;
     @Autowired
     private UserService userService;
+    @Autowired private ITokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> authenticate(@RequestBody AuthenticateRequest request) {
@@ -53,6 +59,30 @@ public class AuthenticateController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "Failed", null));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "Success", userResponse));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse> logout(@RequestBody TokenRequest tokenRequest) {
+        Token token = tokenService.save(tokenRequest);
+        if (token != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(200, "Success", null));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "Failed", null));
+    }
+
+    @GetMapping("/verify_token")
+    public ResponseEntity<ApiResponse> verifyToken(@RequestBody TokenRequest request) {
+        boolean result = true;
+        result = jwtService.isTokenValid(request.getToken());
+        if(result) return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(200, "Success", null));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "Failed", null));
+    }
+
+    @PostMapping("/refresh_token")
+    public ResponseEntity<ApiResponse> refreshToken(@RequestBody TokenRequest request) {
+        String refreshToke = jwtService.refreshToken(request);
+        if (refreshToke != null) return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(200, "Success", refreshToke));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "failed", null));
     }
 
 

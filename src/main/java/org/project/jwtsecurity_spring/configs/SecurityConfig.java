@@ -13,15 +13,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +32,9 @@ public class SecurityConfig {
             "/auths/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/payments/**"
+            "/payments/**",
+            "/products/**",
+            "/orders/**"
     };
 
     @Bean
@@ -48,7 +46,7 @@ public class SecurityConfig {
                     registry.requestMatchers(REQUEST_PUBLIC).permitAll();
                     registry.anyRequest().authenticated();
                 })
-                //.sessionManagement(m -> m.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(m -> m.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
