@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.project.jwtsecurity_spring.configs.CustomerUserDetail;
-import org.project.jwtsecurity_spring.dtos.enums.ErrorCode;
-import org.project.jwtsecurity_spring.exception.AppException;
 import org.project.jwtsecurity_spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
