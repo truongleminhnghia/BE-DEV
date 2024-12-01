@@ -34,7 +34,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/payments/**",
             "/products/**",
-            "/orders/**"
+            "/orders/**",
+            "/oauth2/**"
     };
 
     @Bean
@@ -47,6 +48,7 @@ public class SecurityConfig {
                     registry.anyRequest().authenticated();
                 })
                 .sessionManagement(m -> m.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2Login(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

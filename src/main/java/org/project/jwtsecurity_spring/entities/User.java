@@ -22,6 +22,8 @@ public class User {
     private String lastName;
     private String phone;
     private String avatar;
+    private String googleAccountId;
+    private String facebookAccountId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
