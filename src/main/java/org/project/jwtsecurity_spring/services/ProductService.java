@@ -20,9 +20,9 @@ public class ProductService implements IProductService {
     @Autowired private ProductMapper productMapper;
 
     @Override
-    public ProductResponse saveProduct(CreateProductRequest request) {
-        Product product = productRepository.save(productMapper.toProduct(request));
-        return productMapper.toProductResponse(product);
+    public Product saveProduct(CreateProductRequest request) {
+//        Product product = productRepository.save(productMapper.toProduct(request));
+        return productRepository.save(productMapper.toProduct(request));
     }
 
     @Override

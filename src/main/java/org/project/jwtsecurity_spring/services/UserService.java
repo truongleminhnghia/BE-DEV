@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public UserResponse save(UserRegisterRequest request) {
+    public User save(UserRegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail()))
             throw new AppException(ErrorCode.USER_EXISTED);
         User user = userMapper.toUser(request);
@@ -65,14 +65,14 @@ public class UserService implements UserDetailsService, IUserService {
         if (role == null) throw new AppException(ErrorCode.ROLE_NOT_NULL);
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userMapper.toUserResponse(userRepository.save(user));
+        return userRepository.save(user);
     }
 
     @Override
-    public UserResponse getByEmail(String email) {
+    public User getByEmail(String email) {
         User userExisting = userRepository.findByEmail(email);
         if(userExisting == null) throw new AppException(ErrorCode.USER_DOES_NOT_EXIST);
-        return userMapper.toUserResponse(userExisting);
+        return userExisting;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public UserResponse update(String id, UserUpdateRequest request) {
+    public User update(String id, UserUpdateRequest request) {
         if (id == null || id.trim().isEmpty()) {
             throw new AppException(ErrorCode.USERID_NULL_OR_EMPTY);
         }
@@ -116,7 +116,7 @@ public class UserService implements UserDetailsService, IUserService {
         if(request.getFirstName() != null) user.setFirstName(request.getFirstName());
         if(request.getLastName() != null) user.setLastName(request.getLastName());
         if(request.getPhone() != null) user.setPhone(request.getPhone());
-        return userMapper.toUserResponse(userRepository.save(user));
+        return userRepository.save(user);
     }
 
     @Override

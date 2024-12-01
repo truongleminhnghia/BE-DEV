@@ -39,7 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/payments/**",
             "/products/**",
             "/orders/**",
-            "/oauth2/**"
+            "/oauth2/**",
+            "/user/**"
     );
 
     public String getToken(HttpServletRequest request) {

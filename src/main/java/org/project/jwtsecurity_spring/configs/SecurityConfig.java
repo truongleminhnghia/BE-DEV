@@ -35,7 +35,8 @@ public class SecurityConfig {
             "/payments/**",
             "/products/**",
             "/orders/**",
-            "/oauth2/**"
+            "/oauth2/**",
+            "/user/**"
     };
 
     @Bean
