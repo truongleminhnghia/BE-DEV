@@ -7,7 +7,7 @@ import org.project.jwtsecurity_spring.entities.Product;
 import java.util.List;
 
 public interface IProductService {
-    ProductResponse saveProduct(CreateProductRequest request);
+    Product saveProduct(CreateProductRequest request);
     Product getProduct(String id);
     boolean deleteProduct(String id);
     List<ProductResponse> getAllProducts();
