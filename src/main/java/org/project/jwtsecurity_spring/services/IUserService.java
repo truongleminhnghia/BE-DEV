@@ -8,10 +8,10 @@ import org.project.jwtsecurity_spring.entities.User;
 import java.util.List;
 
 public interface IUserService {
-    Object save(UserRegisterRequest request);
-    UserResponse getByEmail(String email);
+    User save(UserRegisterRequest request);
+    User getByEmail(String email);
     User getById(String id);
     List<UserResponse> getAll();
-    UserResponse update(String id, UserUpdateRequest request);
+    User update(String id, UserUpdateRequest request);
     boolean delete(String id);
 }

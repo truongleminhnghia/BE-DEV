@@ -4,11 +4,12 @@ import jakarta.validation.Valid;
 import org.project.jwtsecurity_spring.dtos.requests.CreateProductRequest;
 import org.project.jwtsecurity_spring.dtos.responses.ApiResponse;
 import org.project.jwtsecurity_spring.dtos.responses.ProductResponse;
+import org.project.jwtsecurity_spring.entities.Product;
+import org.project.jwtsecurity_spring.mapper.ProductMapper;
 import org.project.jwtsecurity_spring.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,15 +18,17 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired private ProductMapper productMapper;
 
 //    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createProduct(@Valid @RequestBody CreateProductRequest request) {
-        ProductResponse productResponse = productService.saveProduct(request);
+        Product product = productService.saveProduct(request);
+        ProductResponse productResponse = productMapper.toProductResponse(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "Product created", productResponse));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{product_id}")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable("product_id") String id) {
         boolean result = productService.deleteProduct(id);

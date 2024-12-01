@@ -8,7 +8,9 @@ import org.project.jwtsecurity_spring.dtos.requests.UserRegisterRequest;
 import org.project.jwtsecurity_spring.dtos.responses.ApiResponse;
 import org.project.jwtsecurity_spring.dtos.responses.UserResponse;
 import org.project.jwtsecurity_spring.entities.Token;
+import org.project.jwtsecurity_spring.entities.User;
 import org.project.jwtsecurity_spring.jwt.JwtService;
+import org.project.jwtsecurity_spring.mapper.UserMapper;
 import org.project.jwtsecurity_spring.services.ITokenService;
 import org.project.jwtsecurity_spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ public class AuthenticateController {
     @Autowired
     private UserService userService;
     @Autowired private ITokenService tokenService;
+    @Autowired private UserMapper userMapper;
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> authenticate(@RequestBody AuthenticateRequest request) {
@@ -54,10 +57,11 @@ public class AuthenticateController {
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody UserRegisterRequest request) {
-        UserResponse userResponse = userService.save(request);
-        if (userResponse == null) {
+         User user = userService.save(request);
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "Failed", null));
         }
+        UserResponse userResponse = userMapper.toUserResponse(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "Success", userResponse));
     }
 
