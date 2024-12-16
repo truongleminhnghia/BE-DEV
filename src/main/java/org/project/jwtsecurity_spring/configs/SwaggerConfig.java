@@ -16,16 +16,16 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-    @Value("${swagger.app.name}")
-    private String swaggerAppName;
-    @Value("${swagger.add.security.name}")
-    private String swaggerAddSecurityName;
-    @Value("${swagger.scheme}")
-    private String swaggerScheme;
-    @Value("${swagger.format}")
-    private String swaggerFormat;
-    @Value("${swagger.dev.url}") private String swaggerDevUrl;
-    @Value("${swagger.pro.url}") private String swaggerProUrl;
+        @Value("${swagger.app.name}")
+        private String swaggerAppName;
+        @Value("${swagger.add.security.name}")
+        private String swaggerAddSecurityName;
+        @Value("${swagger.scheme}")
+        private String swaggerScheme;
+        @Value("${swagger.format}")
+        private String swaggerFormat;
+        @Value("${swagger.dev.url}") private String swaggerDevUrl;
+        @Value("${swagger.pro.url}") private String swaggerProUrl;
 
     @Bean
     public OpenAPI customOpenAPI() {

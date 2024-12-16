@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/products/**",
             "/orders/**",
             "/oauth2/**",
-            "/user/**"
+            "/users/**"
     );
 
     public String getToken(HttpServletRequest request) {

@@ -27,19 +27,22 @@ public class UserController {
     @Autowired private UserMapper userMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody UserRegisterRequest request) {
-        try {
-            User user = userService.save(request);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "Failed", null));
-            }
-            UserResponse userResponse = userMapper.toUserResponse(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "Success", userResponse));
-        } catch (AppException e) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(e.getErrorCode().getCode().value(), e.getErrorCode().getMessage(), null));
-        }
-
-
+//    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody UserRegisterRequest request) {
+//        try {
+//            User user = userService.save(request);
+//            if (user == null) {
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, "Failed", null));
+//            }
+//            UserResponse userResponse = userMapper.toUserResponse(user);
+//            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "Success", userResponse));
+//        } catch (AppException e) {
+//            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(e.getErrorCode().getCode().value(), e.getErrorCode().getMessage(), null));
+//        }
+//
+//
+//    }
+    public String addUser(@Valid @RequestBody UserRegisterRequest userRegisterRequest) {
+        return "usser";
     }
 
 //    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
